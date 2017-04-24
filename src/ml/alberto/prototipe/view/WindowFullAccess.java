@@ -28,11 +28,9 @@ import ml.alberto.prototipe.model.User;
 public class WindowFullAccess extends javax.swing.JFrame implements ActionListener {
 
     private ArrayList<User> users;
-    private ArrayList<User> usersOut;
     private UserDetails details;
     private User userDetails;
-    private DataBaseControl db;
-    private DataBaseOutUsersControl dbout;
+    private DataBaseControl db; 
     private RegisterPanel reg;
 
     /**
@@ -43,14 +41,11 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
         initButons();
         addMouseListener();
         users = new ArrayList<User>();
-        usersOut = new ArrayList<User>();
         details = new UserDetails();
         userDetails = new User();
         db = new DataBaseControl();   
-        dbout = new DataBaseOutUsersControl ();
-        
         chargeUsers();
-        insertOutOfCompany();
+       
        
         
     }
@@ -230,25 +225,7 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
             }
         });
         
-        tableUsersOut.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                try {
-
-                    tableUsersOut = (JTable) e.getSource();
-                    Point point = e.getPoint();
-                    int row = tableUsersOut.rowAtPoint(point);
-                    if (e.getClickCount() == 1) {
-                        setUserDetails(new User((String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 0), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 1), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 2),
-                                (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 3), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 4), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 5),
-                                (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 6), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 7), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 8)));
-
-                    }
-                } catch (ArrayIndexOutOfBoundsException aio) {
-                    System.out.println("EL ARRAY ES MAYOR QUE LA PARTE SELECCIONADA");
-                }
-            }
-        });
+       
     }
     
     
@@ -294,9 +271,7 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
         btnAdd.setActionCommand("ADD");
         btnDBOut.addActionListener(this);
         btnDBOut.setActionCommand("OUT");
-        tableUsersOut.setVisible(false);
-        tableUsersOut.setOpaque(false);
-        labelOut.setVisible(false);
+       
 
     }
    
@@ -304,30 +279,7 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
         details.getDetails(getUserDetails());
     }
     
-    public void insertOutOfCompany(){
-        try{
-            String[] headers = {"ID", "NAME", "LASTNAME", "EMAILML", "MLPASS", "PCPASS", "SKYPEUSER", "BITRIXUSER", "TELEPHONE"};
-            String[][] cells;
-            usersOut = dbout.recorrerBD();
-            cells = new String[usersOut.size()][9];
-            for (int i = 0; i < usersOut.size(); i++) {
-                cells[i][0] = usersOut.get(i).getId();
-                cells[i][1] = usersOut.get(i).getName();
-                cells[i][2] = usersOut.get(i).getLastaName();
-                cells[i][3] = usersOut.get(i).getEmailML();
-                cells[i][4] = "********";
-                cells[i][5] = "********";
-                cells[i][6] = usersOut.get(i).getSkypeUser();
-                cells[i][7] = usersOut.get(i).getBitrixUser();
-                cells[i][8] = usersOut.get(i).getTelephone();
-            }
-             
-            TableModel model = new TableModel(cells, headers);
-            tableUsersOut.setModel(model);
-        }catch(NullPointerException npe){
-            
-        }
-    }
+   
     
    
     @Override
@@ -357,9 +309,7 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
                 
                 break;
             case "OUT":
-                tableUsersOut.setOpaque(true);
-                tableUsersOut.setVisible(true);
-                labelOut.setVisible(true);
+               
                 break;
         }
     }

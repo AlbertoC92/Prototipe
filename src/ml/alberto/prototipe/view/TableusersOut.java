@@ -5,17 +5,37 @@
  */
 package ml.alberto.prototipe.view;
 
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.JTable;
+import ml.alberto.prototipe.control.DataBaseOutUsersControl;
+import ml.alberto.prototipe.control.TableModel;
+import ml.alberto.prototipe.model.User;
+
 /**
  *
  * @author alber
  */
 public class TableusersOut extends javax.swing.JFrame implements ActionListener {
-
+         private UserDetails details;
+         private ArrayList<User> usersOut;
+         private DataBaseOutUsersControl dbout;
+          private User userDetails;
     /**
      * Creates new form TableusersOut
      */
     public TableusersOut() {
         initComponents();
+        initButons();
+        addMouseListener();
+         usersOut = new ArrayList<User>();
+         dbout = new DataBaseOutUsersControl ();
+         userDetails = new User();
+         details = new UserDetails();
     }
 
     /**
@@ -157,4 +177,66 @@ public class TableusersOut extends javax.swing.JFrame implements ActionListener 
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableUsersOut;
     // End of variables declaration//GEN-END:variables
+    
+    
+    public void addMouseListener(){
+         tableUsersOut.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                try {
+
+                    tableUsersOut = (JTable) e.getSource();
+                    Point point = e.getPoint();
+                    int row = tableUsersOut.rowAtPoint(point);
+                    if (e.getClickCount() == 1) {
+                        setUserDetails(new User((String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 0), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 1), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 2),
+                                (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 3), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 4), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 5),
+                                (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 6), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 7), (String) tableUsersOut.getValueAt(tableUsersOut.getSelectedRow(), 8)));
+
+                    }
+                } catch (ArrayIndexOutOfBoundsException aio) {
+                    System.out.println("EL ARRAY ES MAYOR QUE LA PARTE SELECCIONADA");
+                }
+            }
+        });
+    }
+    public void initButons(){
+        
+    }
+     public void insertOutOfCompany(){
+        try{
+            String[] headers = {"ID", "NAME", "LASTNAME", "EMAILML", "MLPASS", "PCPASS", "SKYPEUSER", "BITRIXUSER", "TELEPHONE"};
+            String[][] cells;
+            usersOut = dbout.recorrerBD();
+            cells = new String[usersOut.size()][9];
+            for (int i = 0; i < usersOut.size(); i++) {
+                cells[i][0] = usersOut.get(i).getId();
+                cells[i][1] = usersOut.get(i).getName();
+                cells[i][2] = usersOut.get(i).getLastaName();
+                cells[i][3] = usersOut.get(i).getEmailML();
+                cells[i][4] = "********";
+                cells[i][5] = "********";
+                cells[i][6] = usersOut.get(i).getSkypeUser();
+                cells[i][7] = usersOut.get(i).getBitrixUser();
+                cells[i][8] = usersOut.get(i).getTelephone();
+            }
+             
+            TableModel model = new TableModel(cells, headers);
+           
+        }catch(NullPointerException npe){
+            
+        }
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public User getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(User userDetails) {
+        this.userDetails = userDetails;
+    }
 }
