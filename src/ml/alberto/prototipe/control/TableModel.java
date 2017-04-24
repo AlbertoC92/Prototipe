@@ -12,8 +12,8 @@ import javax.swing.table.DefaultTableModel;
  * @author alber
  */
 public class TableModel extends DefaultTableModel{
-      // Establecemos os tipos de datos de las columnas
-    Class[] tipoColumna = {
+      // Establecemos os tipos de data de las columns
+    Class[] ColumnType = {
         java.lang.String.class,
         java.lang.String.class,
         java.lang.String.class,
@@ -28,15 +28,15 @@ public class TableModel extends DefaultTableModel{
     // Establecemos cuáles son editables
     boolean[] editColumn = {false,false,false,false,false,false,false,false,false};
     
-    public TableModel(Object datos[][], Object cabeceras[]) {
-        super(datos,cabeceras);
+    public TableModel(Object data[][], Object heads[]) {
+        super(data,heads);
     }
     
-    public Class getColumnClass(int indice) {
-        return tipoColumna[indice];
+    public Class getColumnClass(int index) {
+        return ColumnType[index];
     }
     
-    public boolean isCellEditable(int fila, int columna) {
-        return editColumn[columna];
+    public boolean isCellEditable(int fila, int column) {
+        return editColumn[column];
     }
 }
