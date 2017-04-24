@@ -236,7 +236,7 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
             String[] headers = {"ID", "NAME", "LASTNAME", "EMAILML", "MLPASS", "PCPASS", "SKYPEUSER", "BITRIXUSER", "TELEPHONE"};
             String[][] cells;
            
-            users = db.recorrerBD();
+            users = db.checkDB();
             cells = new String[users.size()][9];
             for (int i = 0; i < users.size(); i++) {
                 cells[i][0] = users.get(i).getId();
@@ -298,7 +298,7 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
                 dispose();
                 break;
             case "DELETE":
-                db.borrar(getUserDetails().getEmailML());
+                db.delete(getUserDetails().getEmailML());
                 JOptionPane.showMessageDialog(this,"User removed");
                 new WindowFullAccess().setVisible(true);
                 dispose();

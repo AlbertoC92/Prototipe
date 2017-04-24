@@ -538,7 +538,7 @@ public class UserDetails extends javax.swing.JFrame implements ActionListener{
     public void activateTextFields(){
        
         String email = txtLast.getText();
-        user = db.recuperar(email);
+        user = db.reload(email);
         txtID.setEditable(true);
         txtName.setEditable(true);
         txtLast.setEditable(true);
@@ -568,14 +568,14 @@ public class UserDetails extends javax.swing.JFrame implements ActionListener{
     }
     public void upgradeDetails(){
         
-        db.actualizar(new User (getTxtID().getText(),getTxtName().getText(),getTxtEmailML().getText(),getTxtLast().getText(),getTxtMLPass().getText(),getTxtPCPass().getText()
+        db.upgrade(new User (getTxtID().getText(),getTxtName().getText(),getTxtEmailML().getText(),getTxtLast().getText(),getTxtMLPass().getText(),getTxtPCPass().getText()
         ,getTxtSkypeUser().getText(),getTxtBitrixUser().getText(),getTxtTelephone().getText()));
         
         
     }
     
     public void removeUser(){
-        db.borrar(getTxtEmailML().getText());
+        db.delete(getTxtEmailML().getText());
         dbout.insertar(new User(getTxtID().getText(),getTxtName().getText(),getTxtEmailML().getText(),getTxtLast().getText(),getTxtMLPass().getText(),getTxtPCPass().getText()
         ,getTxtSkypeUser().getText(),getTxtBitrixUser().getText(),getTxtTelephone().getText()));
         

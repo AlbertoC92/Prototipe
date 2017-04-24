@@ -28,10 +28,8 @@ public class DataBaseControl {
     private static String URL_DB="jdbc:derby://localhost:1527/Prototipe";
     private static String USUARIO="Alberto";
     private static String PASSWD="alberto";
-    private static String URL_DB_REAL="jdbc:derby://localhost:1527/RealPasswords";
     private Statement sentencia;
     private Connection conexion;
-    private Connection conexion2;
     private ArrayList<User> contactos;
 
     
@@ -39,37 +37,12 @@ public class DataBaseControl {
       contactos = new ArrayList<User>();
       
     }
-    public void conection2(){
-        try {
-            System.out.println("Comenzado la conxión con la BBDD...");
-            System.out.println("Cargando el controlador...");
-            String controlador = "org.apache.derby.jdbc.ClientDriver"; 
-            Class.forName(controlador).newInstance();
-            
-            //creando la conexión
-            conexion=DriverManager.getConnection(URL_DB_REAL,USUARIO,PASSWD);
-            
-            //lanzando una sentencia
-            sentencia = conexion.createStatement();
-           
-             
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
-        }catch (InstantiationException ex) {
-                Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-      
-    }
+    
     public void conectarse() {
         
         try {
-            System.out.println("Comenzado la conxión con la BBDD...");
-            System.out.println("Cargando el controlador...");
+            System.out.println("Starting BBDD...");
+            System.out.println("Loading the BBDD...");
             String controlador = "org.apache.derby.jdbc.ClientDriver"; 
             Class.forName(controlador).newInstance();
            
@@ -110,7 +83,7 @@ public class DataBaseControl {
         return find;
     }
     
-    public User recuperar(String email){
+    public User reload(String email){
        
         conectarse();
         User user = null;
@@ -126,11 +99,11 @@ public class DataBaseControl {
        } catch (SQLException ex) {
             Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-       cerrarConexion();
+       closeConexion();
        return user;
     }
     
-    public ArrayList<User> recorrerBD(){
+    public ArrayList<User> checkDB(){
         conectarse();
         try{
             ResultSet resultado = sentencia.executeQuery("select * from Usuarios");
@@ -146,11 +119,11 @@ public class DataBaseControl {
         }catch(SQLException sql){
             Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, sql);
         }
-        cerrarConexion();
+        closeConexion();
         return contactos;
     }
     
-    public void insertar(User user){
+    public void insert(User user){
         conectarse();
         PreparedStatement estado;
         String query = "INSERT INTO Usuarios (id,name,lastname,emailml,mlpass,pcpass,skypeuser,bitrixuser,telephone) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -173,11 +146,11 @@ public class DataBaseControl {
         }catch(SQLException sql){
              Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, sql);
         }
-        cerrarConexion();
+        closeConexion();
     }
                
     
-    public void borrar(String mail){
+    public void delete(String mail){
        
            conectarse();
         try {
@@ -192,10 +165,10 @@ public class DataBaseControl {
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        cerrarConexion();
+        closeConexion();
     }
     
-    public void actualizar(User user){
+    public void upgrade(User user){
         conectarse();
         try{
             PreparedStatement consulta;
@@ -222,7 +195,7 @@ public class DataBaseControl {
         }
     }
     
-    public void cerrarConexion(){
+    public void closeConexion(){
         try {
            
             sentencia.close();

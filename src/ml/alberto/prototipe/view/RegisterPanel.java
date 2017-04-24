@@ -165,7 +165,7 @@ public class RegisterPanel extends javax.swing.JFrame implements ActionListener 
                 String pass = txtPass.getText();
 
                 if (dbc.verifyUser(mail, pass)) {
-                    User usuario = dbc.recuperar(mail);
+                    User usuario = dbc.reload(mail);
 
                     if (usuario.getId().equals("1")) {
                         txtMail.setText("");
