@@ -26,17 +26,17 @@ public class DataBaseOutUsersControl {
     private static String URL_DB="jdbc:derby://localhost:1527/Prototipe";
     private static String USUARIO="Alberto";
     private static String PASSWD="alberto";
-    private Statement sentencia;
-    private Connection conexion;
-    private ArrayList<User> contactos;
+    private Statement sentence;
+    private Connection connection;
+    private ArrayList<User> contacts;
 
     
     public DataBaseOutUsersControl(){
-      contactos = new ArrayList<User>();
+      contacts = new ArrayList<User>();
       
     }
    
-    public void conectarse() {
+    public void connect() {
         
         try {
             System.out.println("Comenzado la conxión con la BBDD...");
@@ -45,10 +45,10 @@ public class DataBaseOutUsersControl {
             Class.forName(controlador).newInstance();
            
             //creando la conexión
-            conexion=DriverManager.getConnection(URL_DB,USUARIO,PASSWD);
+            connection=DriverManager.getConnection(URL_DB,USUARIO,PASSWD);
             
-            //lanzando una sentencia
-            sentencia = conexion.createStatement();
+            //lanzando una sentence
+            sentence = connection.createStatement();
           
              
             
@@ -66,11 +66,11 @@ public class DataBaseOutUsersControl {
    
     public boolean verifyUser(String mail,String pass){
         boolean find=false;
-        conectarse();
+        connect();
         
         try{
-             ResultSet resultado = sentencia.executeQuery("SELECT emailml, mlpass, id FROM UserOut where emailml ='"+mail+"' and mlpass ='"+pass+"'");
-             if(resultado.next()){
+             ResultSet result = sentence.executeQuery("SELECT emailml, mlpass, id FROM UserOut where emailml ='"+mail+"' and mlpass ='"+pass+"'");
+             if(result.next()){
                  find=true;
              }else{
                  find=false;
@@ -83,50 +83,50 @@ public class DataBaseOutUsersControl {
     
     public User recuperar(String email){
        
-        conectarse();
+        connect();
         User user = null;
       
        try{
-            ResultSet resultado = sentencia.executeQuery("SELECT * FROM UserOut where emailml ='"+email+"'");
-            while(resultado.next()){
-                user = new User(resultado.getString(1),resultado.getString(2),resultado.getString(3),email,resultado.getString(5),resultado.getString(6),
-                resultado.getString(7),resultado.getString(8),resultado.getString(9));
+            ResultSet result = sentence.executeQuery("SELECT * FROM UserOut where emailml ='"+email+"'");
+            while(result.next()){
+                user = new User(result.getString(1),result.getString(2),result.getString(3),email,result.getString(5),result.getString(6),
+                result.getString(7),result.getString(8),result.getString(9));
             
                 
             }
        } catch (SQLException ex) {
             Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-       cerrarConexion();
+       closeConnection();
        return user;
     }
     
     public ArrayList<User> recorrerBD(){
-        conectarse();
+        connect();
         try{
-            ResultSet resultado = sentencia.executeQuery("select * from UserOut");
-                while (resultado.next()){
-                       System.out.println(String.format("%s%s%s%s",resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4),
-                                resultado.getString(5),resultado.getString(6),
-                                resultado.getString(7),resultado.getString(8),resultado.getString(9)));
-                    contactos.add(new User(resultado.getString(1),resultado.getString(2),resultado.getString(3),resultado.getString(4),
-                                resultado.getString(5),resultado.getString(6),
-                                resultado.getString(7),resultado.getString(8),resultado.getString(9)));
+            ResultSet result = sentence.executeQuery("select * from UserOut");
+                while (result.next()){
+                       System.out.println(String.format("%s%s%s%s",result.getString(1),result.getString(2),result.getString(3),result.getString(4),
+                                result.getString(5),result.getString(6),
+                                result.getString(7),result.getString(8),result.getString(9)));
+                    contacts.add(new User(result.getString(1),result.getString(2),result.getString(3),result.getString(4),
+                                result.getString(5),result.getString(6),
+                                result.getString(7),result.getString(8),result.getString(9)));
                 }
             
         }catch(SQLException sql){
             Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, sql);
         }
-        cerrarConexion();
-        return contactos;
+        closeConnection();
+        return contacts;
     }
     
-    public void insertar(User user){
-        conectarse();
+    public void insert(User user){
+        connect();
         PreparedStatement estado;
         String query = "INSERT INTO UserOut (id,name,lastname,emailml,mlpass,pcpass,skypeuser,bitrixuser,telephone) VALUES(?,?,?,?,?,?,?,?,?)";
         try{
-            estado= conexion.prepareStatement(query);
+            estado= connection.prepareStatement(query);
             estado.setString(1, user.getId());
             estado.setString(2, user.getName());
             estado.setString(3, user.getLastaName());
@@ -139,52 +139,52 @@ public class DataBaseOutUsersControl {
            
             estado.execute();
            
-            contactos.add(user);
+            contacts.add(user);
            
         }catch(SQLException sql){
              Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, sql);
         }
-        cerrarConexion();
+        closeConnection();
     }
                
     
-    public void borrar(String mail){
+    public void delete(String mail){
        
-           conectarse();
+           connect();
         try {
-            PreparedStatement consulta;
+            PreparedStatement consult;
             String query= "DELETE FROM UserOut where emailml =?";
-            consulta = conexion.prepareStatement(query);
-            consulta.setString(1, mail);
-            consulta.execute();
+            consult = connection.prepareStatement(query);
+            consult.setString(1, mail);
+            consult.execute();
             
             System.out.println("ELEMENTO BORRADO");
       
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        cerrarConexion();
+        closeConnection();
     }
     
-    public void actualizar(User user){
-        conectarse();
+    public void upgrade(User user){
+        connect();
         try{
-            PreparedStatement consulta;
+            PreparedStatement consult;
             String query ="UPDATE UserOut SET  id=?, name=?, lastname=? ,emailml=?, mlpass=?, pcpass=?, skypeuser=?, bitrixuser=?, telephone=? where emailml =?";
-            consulta = conexion.prepareStatement(query);
-            consulta.setString(1, user.getId());
-            consulta.setString(2, user.getName());
-            consulta.setString(3, user.getLastaName());
-            consulta.setString(4, user.getEmailML());
-            consulta.setString(5, user.getMLPass());
-            consulta.setString(6, user.getPCPass());
-            consulta.setString(7, user.getSkypeUser());
-            consulta.setString(8, user.getBitrixUser()); 
-            consulta.setString(9, user.getTelephone());
-            consulta.setString(10,user.getEmailML());
+            consult = connection.prepareStatement(query);
+            consult.setString(1, user.getId());
+            consult.setString(2, user.getName());
+            consult.setString(3, user.getLastaName());
+            consult.setString(4, user.getEmailML());
+            consult.setString(5, user.getMLPass());
+            consult.setString(6, user.getPCPass());
+            consult.setString(7, user.getSkypeUser());
+            consult.setString(8, user.getBitrixUser()); 
+            consult.setString(9, user.getTelephone());
+            consult.setString(10,user.getEmailML());
             
             
-            consulta.execute();
+            consult.execute();
             
             JOptionPane.showMessageDialog(null,"User Upgrade");
             System.out.println("ELEMENTO ACTUALIZADO");
@@ -193,10 +193,10 @@ public class DataBaseOutUsersControl {
         }
     }
     
-    public void cerrarConexion(){
+    public void closeConnection(){
         try {
            
-            sentencia.close();
+            sentence.close();
         } catch (SQLException ex) {
             Logger.getLogger(DataBaseControl.class.getName()).log(Level.SEVERE, null, ex);
         }

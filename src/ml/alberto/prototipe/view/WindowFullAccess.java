@@ -227,9 +227,6 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
         
        
     }
-    
-    
-   
 
     private void chargeUsers() {
         try {
@@ -249,12 +246,10 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
                 cells[i][7] = users.get(i).getBitrixUser();
                 cells[i][8] = users.get(i).getTelephone();
             }
-             
+
             TableModel model = new TableModel(cells, headers);
             tableUsers.setModel(model);
-           
-            
-            
+
         } catch (NullPointerException npe) {
 
         }
@@ -274,7 +269,7 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
        
 
     }
-   
+
     public void details() {
         details.getDetails(getUserDetails());
     }
@@ -302,11 +297,11 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
                 JOptionPane.showMessageDialog(this,"User removed");
                 new WindowFullAccess().setVisible(true);
                 dispose();
-                
+
                 break;
             case "ADD":
                 details.setVisible(true);
-                
+
                 break;
             case "OUT":
                
@@ -327,8 +322,5 @@ public class WindowFullAccess extends javax.swing.JFrame implements ActionListen
         public MouseAdapterImpl() {
         }
     }
-
-   
-    
 
 }

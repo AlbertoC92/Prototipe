@@ -576,7 +576,7 @@ public class UserDetails extends javax.swing.JFrame implements ActionListener{
     
     public void removeUser(){
         db.delete(getTxtEmailML().getText());
-        dbout.insertar(new User(getTxtID().getText(),getTxtName().getText(),getTxtEmailML().getText(),getTxtLast().getText(),getTxtMLPass().getText(),getTxtPCPass().getText()
+        dbout.insert(new User(getTxtID().getText(),getTxtName().getText(),getTxtEmailML().getText(),getTxtLast().getText(),getTxtMLPass().getText(),getTxtPCPass().getText()
         ,getTxtSkypeUser().getText(),getTxtBitrixUser().getText(),getTxtTelephone().getText()));
         
     }

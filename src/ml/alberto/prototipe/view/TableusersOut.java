@@ -5,6 +5,7 @@
  */
 package ml.alberto.prototipe.view;
 
+
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,8 @@ import javax.swing.JTable;
 import ml.alberto.prototipe.control.DataBaseOutUsersControl;
 import ml.alberto.prototipe.control.TableModel;
 import ml.alberto.prototipe.model.User;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -147,15 +150,11 @@ public class TableusersOut extends javax.swing.JFrame implements ActionListener 
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TableusersOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TableusersOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TableusersOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TableusersOut.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
@@ -177,6 +176,7 @@ public class TableusersOut extends javax.swing.JFrame implements ActionListener 
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableUsersOut;
     // End of variables declaration//GEN-END:variables
+
     
     
     public void addMouseListener(){
@@ -227,11 +227,7 @@ public class TableusersOut extends javax.swing.JFrame implements ActionListener 
             
         }
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+
     public User getUserDetails() {
         return userDetails;
     }
@@ -239,4 +235,12 @@ public class TableusersOut extends javax.swing.JFrame implements ActionListener 
     public void setUserDetails(User userDetails) {
         this.userDetails = userDetails;
     }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+    
 }
