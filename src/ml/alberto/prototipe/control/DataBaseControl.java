@@ -44,10 +44,10 @@ public class DataBaseControl {
             //Here the method connect to the data base by the url,user and pass 
 
             //Here the method connect to the data base by the url,user and pass 
-            conexion = DriverManager.getConnection("jdbc:mysql://46.101.112.185:3306/usuarios"
+            conexion = DriverManager.getConnection("jdbc:mysql://example:1234/example"
                     + "?verifyServerCertificate=false"
                     + "&useSSL=true"
-                    + "&requireSSL=true", "manager", "coffeetime");
+                    + "&requireSSL=true", "alber", "example");
             System.out.println("Connected to PRIVILEGE ACCESS by getconnection");
 
         } catch (Exception e) {
@@ -64,12 +64,12 @@ public class DataBaseControl {
             Class.forName("com.mysql.jdbc.Driver");//Chargin the connection driver 
             // connect way #1
 
-            String url1 = "jdbc:mysql://46.101.112.185:3306/usuarios"
+            String url1 = "jdbc:mysql://example:1234/example"
                     + "?verifyServerCertificate=false"
                     + "&useSSL=true"
                     + "&requireSSL=true";
-            String user = "manager";
-            String password = "coffeetime";
+            String user = "alert";
+            String password = "example";
 
             connection = DriverManager.getConnection(url1, user, password);
             if (connection != null) {
