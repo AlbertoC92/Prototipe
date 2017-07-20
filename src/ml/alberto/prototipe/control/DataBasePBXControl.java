@@ -39,10 +39,10 @@ public class DataBasePBXControl {
             //Here the method connect to the data base by the url,user and pass 
 
             //Here the method connect to the data base by the url,user and pass 
-            conexion = DriverManager.getConnection("jdbc:mysql://46.101.112.185:3306/usuarios"
+            conexion = DriverManager.getConnection("jdbc:mysql://example:1234/example"
                     + "?verifyServerCertificate=false"
                     + "&useSSL=true"
-                    + "&requireSSL=true", "manager", "coffeetime");
+                    + "&requireSSL=true", "alber", "example");
             System.out.println("Connected to PRIVILEGE ACCESS by getconnection");
 
         } catch (Exception e) {
